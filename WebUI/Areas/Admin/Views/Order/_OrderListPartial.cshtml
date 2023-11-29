@@ -1,0 +1,103 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model List<Application.Models.Order.OrderDetailModel>
+
+@{
+    Layout = null;
+
+    var fullName = AppVersion.IsEnglishVersion ? "Ful name" : "Họ tên";
+    var address = AppVersion.IsEnglishVersion ? "Address" : "Địa chỉ";
+    var phoneNumber = AppVersion.IsEnglishVersion ? "Phone Number" : "SĐT";
+    var paymentMethod = AppVersion.IsEnglishVersion ? "Payment Method" : "Thanh toán bằng";
+    var orderStatus = AppVersion.IsEnglishVersion ? "Order Status" : "Trạng thái đơn hàng";
+    var paymentStatus = AppVersion.IsEnglishVersion ? "Payment Status" : "Trạng thái thanh toán";
+    var totalAmount = AppVersion.IsEnglishVersion ? "Toal Amount" : "Tổng thanh toán";
+    var createdAt = AppVersion.IsEnglishVersion ? "Order at" : "Đặt ngày";
+    var action = AppVersion.IsEnglishVersion ? "Action" : "Thao tác";
+    var orderCode = AppVersion.IsEnglishVersion ? "Order Code" : "Mã hóa đơn";
+    var currency = AppVersion.IsEnglishVersion ? "$" : "đ";
+}
+
+<div class="dt-ext table-responsive">
+    <table class="display" id="grid-datatable">
+        <thead>
+        <tr>
+            <th>@orderCode</th>
+            <th>@fullName</th>
+            <th>@address</th>
+            <th>@phoneNumber</th>
+            <th>@paymentMethod</th>
+            <th>@orderStatus</th>
+            <th>@paymentStatus</th>
+            <th>@totalAmount</th>
+            <th>@createdAt</th>
+            <th>@action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Code</td>
+                <td>@item.CustomerName</td>
+                <td>@item.Address</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.PaymentMethod</td>
+                <td>
+                    @switch (@item.OrderStatusCode)
+                    {
+                        case "AwaitingShip":
+                            <span title="@item.OrderStatus" class="badge badge-pill pill-badge-warning">@item.OrderStatus</span>
+                            break;
+                        case "Shipping":
+                            <span title="@item.OrderStatus" class="badge badge-pill pill-badge-warning">@item.OrderStatus</span>
+                            break;
+                        case "Reject":
+                            <span title="@item.OrderStatus" class="badge badge-pill pill-badge-secondary">@item.OrderStatus</span>
+                            break;
+                        case "Cancel":
+                            <span title="@item.OrderStatus" class="badge badge-pill pill-badge-primary">@item.OrderStatus</span>
+                            break;
+                        case "Received":
+                            <span title="@item.OrderStatus" class="badge badge-pill pill-badge-success">@item.OrderStatus</span>
+                            break;
+                        default:
+                            <span title="@item.OrderStatus" class="badge badge-pill pill-badge-primary">@item.OrderStatus</span>
+                            break;
+                    }
+                </td>
+                <td>
+                    @switch (@item.PaymentStatusCode)
+                    {
+                        case "Paid":
+                            <span title="@item.PaymentStatus" class="badge badge-pill pill-badge-success">@item.PaymentStatus</span>
+                            break;
+                        case "WaitingPay":
+                            <span title="@item.PaymentStatus" class="badge badge-pill pill-badge-warning">@item.PaymentStatus</span>
+                            break;
+                        default:
+                            <span title="@item.PaymentStatus" class="badge badge-pill pill-badge-primary">@item.PaymentStatus</span>
+                            break;
+                    }
+                </td>
+                <td>@currency.ToCurrencyMoney(item.TotalAmount)</td>
+                <td>@item.CreatedAt.ToDatetimeString()</td>
+                <td>
+                    <div style="text-align: center;">
+                        <i class="fa fa-eye hover-link btn-view-detail" style="color: #9ad717" title="Review" data-id="@item.Id.ToString()"></i>
+                        | <i class="fa fa-pencil hover-link btn-edit" style="color: #0a03ff" title="Edit" data-id="@item.Id.ToString()"></i>
+                    </div>
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>
+
+
+<script src="~/admin/assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
+<script src="~/admin/assets/js/datatable/datatable-extension/dataTables.responsive.min.js"></script>
+<script src="~/js/application/admin/datatable.js"></script>
+<script src="~/js/application/admin/order/action.js"></script>

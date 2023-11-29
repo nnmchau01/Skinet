@@ -1,0 +1,14 @@
+﻿@using Domain.Constants
+@{
+    var accessDenied = AppVersion.IsEnglishVersion ? "Access Denied" : "Truy cập bị từ chối";
+}
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <h1>@accessDenied</h1>
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->

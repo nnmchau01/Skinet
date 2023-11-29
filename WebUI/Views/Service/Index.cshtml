@@ -1,0 +1,107 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model List<Application.Models.Service.ServiceDetailModel>
+
+@{
+    var home = AppVersion.IsEnglishVersion ? "Home" : "Trang chủ";
+    var service = AppVersion.IsEnglishVersion ? "Service" : "Dịch vụ sửa chữa";
+    var book = AppVersion.IsEnglishVersion ? "Book a repair" : "Đặt lịch sửa chữa";
+    var btnBook = AppVersion.IsEnglishVersion ? "Booking" : "Đặt lịch";
+    var lbBookDate = AppVersion.IsEnglishVersion ? "Appointment date" : "Ngày hẹn";
+    var lbFullName = AppVersion.IsEnglishVersion ? "Full name" : "Họ & tên";
+    var lbEmail = AppVersion.IsEnglishVersion ? "Email" : "Địa chỉ Email";
+    var lbPhoneNumber = AppVersion.IsEnglishVersion ? "Phone number" : "Số điện thoại";
+    var lbServiceId = AppVersion.IsEnglishVersion ? "Service" : "Dịch vụ";
+    var lbBookTime = AppVersion.IsEnglishVersion ? "Time" : "Giờ";
+    var lbNote = AppVersion.IsEnglishVersion ? "Note" : "Ghi chú thêm";
+    var errMessage = AppVersion.IsEnglishVersion ? "Please fill all field" : "Vui lòng điền đầy đủ thông tin";
+    var lbExpertDate = AppVersion.IsEnglishVersion ? "Expert date" : "Ngày mong muốn nhận";
+}
+
+
+<!-- Page info -->
+<div class="page-top-info">
+    <div class="container">
+        <h4>@service</h4>
+        <div class="site-pagination">
+            <a href="">@home</a> /
+            <a href="">@service</a> /
+        </div>
+    </div>
+</div>
+<!-- Page info end -->
+
+
+<!-- Contact section -->
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 contact-info">
+                <h3 style="text-align: center">@book</h3>
+                <h6 class="text-danger" id="ErrMessage" style="display: none;text-align: center">@errMessage</h6>
+                <br/>
+                <form class="contact-form">
+                    
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="FullName">@lbFullName <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" id="FullName"/>
+                        </div>
+                        <div class="col-6">
+                            <label for="Email">@lbEmail <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" id="Email"/>
+                        </div>
+                        <div class="col-6">
+                            <label for="PhoneNumber">@lbPhoneNumber <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" id="PhoneNumber"/>
+                        </div>
+                        <div class="col-6">
+                            <label for="ServiceId">@lbServiceId <span class="text-danger">*</span></label>
+                            <select class="form-control" type="text" id="ServiceId"></select>
+                        </div>
+                        <div class="col-6">
+                            <label for="BookDate">@lbBookDate <span class="text-danger">*</span></label>
+                            <input class="form-control" type="date" id="BookDate"/>
+                        </div>
+                        <div class="col-6">
+                            <label for="BookTime">@lbBookTime <span class="text-danger">*</span></label>
+                            <select class="form-control" type="text" id="BookTime"></select>
+                        </div>
+                        <div class="col-6">
+                            <label for="ExpertDate">@lbExpertDate</label>
+                            <input class="form-control" type="date" id="ExpertDate"/>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="Note">@lbNote</label>
+                            <textarea class="form-control" id="Note"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="col-md-offset-2 col-md-10">
+                                <recaptcha />
+                            </div>
+                            <span class="text-danger" id="recaptcha"></span>
+                        </div>
+                    </div>
+                    <hr />
+                    <button class="site-btn" id="btn-book">@btnBook</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact section end -->
+
+<hr>
+
+<script src="~/js/application/web/service.js" asp-append-version="true"></script>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<recaptcha-script validation-message-element-id="recaptcha" />

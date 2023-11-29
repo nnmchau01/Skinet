@@ -1,0 +1,87 @@
+﻿@using Domain.Constants
+@model Application.Models.Order.OrderFilterModel
+
+@{
+    Layout = null;
+
+    var title = AppVersion.IsEnglishVersion ? "Update Order" : "Cập nhật trạng thái đơn hàng";
+    var required = AppVersion.IsEnglishVersion ? "This field is required." : "Trường này là bắt buộc.";
+    var save = AppVersion.IsEnglishVersion ? "Save" : "Cập nhật";
+    var orderStatus = AppVersion.IsEnglishVersion ? "Order Status" : "Trạng thái đơn hàng";
+    var paymentStatus = AppVersion.IsEnglishVersion ? "Payment Status" : "Trạng thái thanh toán";
+    var checkedOrderStatus = "";
+    var checkedPaymentStatus = "";
+}
+
+<input id="OrderId" value="@Model.OrderDetail.Id.ToString()" type="hidden"/>
+
+<div class="modal-header">
+    <h4 class="modal-title">@title</h4>
+    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form id="frmSubmit" class="contact-form">
+        <div class="form-group">
+            <div class="col-form-label">
+                @orderStatus:
+                <div class="card-body animate-chk">
+                    <div class="row">
+                        <div class="col">
+                            @foreach (var item in Model.ListOrderStatus)
+                            {
+                                checkedOrderStatus = item.Id == Model.OrderDetail.OrderStatusId ? "checked=\"checked\"" : "";
+
+                                <label class="d-block" for="@item.Id">
+                                    <input
+                                        class="checkbox_animated"
+                                        value="@item.Id"
+                                        name="OrderStatus"
+                                        id="@item.Id"
+                                        type="radio"
+                                        @checkedOrderStatus> @item.Display
+                                </label>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span id="sOrderStatus" class="text-danger" style="display: none;">@required</span>
+        </div>
+
+        <div class="form-group">
+            <div class="col-form-label">
+                @paymentStatus:
+                <div class="card-body animate-chk">
+                    <div class="row">
+                        <div class="col">
+                            @foreach (var item in Model.ListPaymentStatus)
+                            {
+                                checkedPaymentStatus = item.Id == Model.OrderDetail.PaymentStatusId ? "checked=\"checked\"" : "";
+
+                                <label class="d-block" for="@item.Id">
+                                    <input
+                                        class="checkbox_animated"
+                                        value="@item.Id"
+                                        name="PaymentStatus"
+                                        id="@item.Id"
+                                        type="radio"
+                                        @checkedPaymentStatus> @item.Display
+                                </label>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span id="sPaymentStatus" class="text-danger" style="display: none;">@required</span>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" id="btn-submit-update-order">@save</button>
+</div>
+
+<script src="~/js/application/admin/order/update.js"></script>

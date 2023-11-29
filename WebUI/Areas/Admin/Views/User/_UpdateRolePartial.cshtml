@@ -1,0 +1,69 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model Application.Models.User.UserDetailModel
+
+@{
+    Layout = null;
+
+    var updateRoleFor = AppVersion.IsEnglishVersion ? "Update role for:" : "Cập nhật quyền người dùng:";
+    var required = AppVersion.IsEnglishVersion ? "This field is required." : "Trường này là bắt buộc.";
+    var save = AppVersion.IsEnglishVersion ? "Save" : "Cập nhật";
+    var roletext = AppVersion.IsEnglishVersion ? "Role" : "Quyền quản trị";
+}
+<input type="hidden" id="UserId" value="@Model.Id.ToString()"/>
+
+<div class="modal-header">
+    <h4 class="modal-title">@updateRoleFor @Model.Email</h4>
+    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form id="frmSubmit" class="contact-form">
+        <div class="form-group">
+            <div class="col-form-label">
+                @roletext:
+                <div class="card-body animate-chk">
+                    <div class="row">
+                        <div class="col">
+                            @foreach (var role in Model.RolesDefault)
+                            {
+                                if (Model.ListRole != null && Model.ListRole.Contains(role.Name))
+                                {
+                                    <label class="d-block" for="@role.Id.ToString()">
+                                        <input
+                                            class="checkbox_animated"
+                                            value="@role.Name"
+                                            name="Role"
+                                            id="@role.Id.ToString()"
+                                            type="checkbox"
+                                            checked="checked"> @role.Name
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="d-block" for="@role.Id.ToString()">
+                                        <input
+                                            class="checkbox_animated"
+                                            value="@role.Name"
+                                            name="Role"
+                                            id="@role.Id.ToString()"
+                                            type="checkbox"> @role.Name
+                                    </label>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span id="sRole" class="text-danger" style="display: none;">@required</span>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary text-center" id="btn-submit-update-role">@save</button>
+</div>
+
+<script src="~/js/application/admin/user/add-update.js"></script>

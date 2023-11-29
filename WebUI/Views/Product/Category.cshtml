@@ -1,0 +1,139 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model Application.Models.Search.SearchPageModel
+
+@{
+    var detail = AppVersion.IsEnglishVersion ? "Page Detail" : "Trang chi tiết";
+    var findByPrice = AppVersion.IsEnglishVersion ? "Search by Range Price" : "Tìm kiếm theo giá";
+    var apply = AppVersion.IsEnglishVersion ? "Apply" : "Áp dụng";
+    var empty = AppVersion.IsEnglishVersion ? "No item found" : "Không tìm thấy kết quả nào";
+    var addToCart = AppVersion.IsEnglishVersion ? "ADD TO CART" : "THÊM GIỎ HÀNG";
+    var category = AppVersion.IsEnglishVersion ? "Categories" : "Thể loại";
+    var brand = AppVersion.IsEnglishVersion ? "Brand" : "Thương hiệu";
+    var product = AppVersion.IsEnglishVersion ? "Products" : "Sản phẩm";
+    var home = AppVersion.IsEnglishVersion ? "Home" : "Trang chủ";
+}
+
+
+<!-- Page info -->
+<div class="page-top-info">
+    <div class="container">
+        <h4>@product</h4>
+        <div class="site-pagination">
+            <a href="">@home</a> /
+            <a href="">Shop</a> /
+        </div>
+    </div>
+</div>
+<!-- Page info end -->
+
+
+<!-- Category section -->
+<section class="category-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 order-2 order-lg-1">
+                <div class="filter-widget">
+                    <h2 class="fw-title">@category</h2>
+                    <ul class="category-menu">
+                        @foreach (var item in Model.Categories)
+                        {
+                            <li>
+                                <a href="/Product/Category?value=@item.Code">@item.Name</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="filter-widget">
+                    <h2 class="fw-title">@brand</h2>
+                    <ul class="category-menu">
+                        @foreach (var item in Model.Brands)
+                        {
+                            <li>
+                                <a href="/Product/Brand?value=@item.Code">@item.Name</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="filter-widget mb-0">
+                    <h2 class="fw-title">@findByPrice</h2>
+                    <div class="price-range-wrap">
+                        <h4>
+                            <button class="btn btn-primary" id="btn-search-by-price">@apply</button>
+                        </h4>
+                        <input type="text" class="js-range-slider-custom" value=""/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
+                @if (Model.PagingResult.Data?.Count > 0)
+                {
+                    <div class="row">
+                        @foreach (var item in  Model.PagingResult.Data)
+                        {
+                            <div class="col-lg-4 col-sm-6">
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        @if (item.Discount > 0)
+                                        {
+                                            <div class="tag-sale">-@item.Discount%</div>
+                                        }
+                                        <a href="/p/@item.Url">
+                                            <img style="width: 263px !important;height: 408px !important;" src="@item.DefaultImage" alt="">
+                                        </a>
+                                        <div class="pi-links">
+                                            <a
+                                                href="#"
+                                                class="add-card add-to-cart"
+                                                product-id="@item.Id.ToString()">
+                                                <i class="flaticon-bag"></i>
+                                                <span>@addToCart</span>
+                                            </a>
+                                            <a href="#" class="wishlist-btn">
+                                                <i class="flaticon-heart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="pi-text">
+                                        @if (item.Discount > 0)
+                                        {
+                                            <h6 style="text-decoration: line-through">@item.Currency.ToCurrencyMoney(item.Price)</h6>
+                                            <h6>@item.Currency.ToCurrencyMoney(item.Price.CalDiscountPrice(item.Discount))</h6>
+                                        }
+                                        else
+                                        {
+                                            <h6>@item.Currency.ToCurrencyMoney(item.Price)</h6>
+                                        }
+                                        <p>@item.Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="text-center w-100 pt-3">
+                            <nav aria-label="Page navigation example">
+                                <input type="hidden" id="MinPrice" value="@Model.PagingResult.MinPrice"/>
+                                <input type="hidden" id="MaxPrice" value="@Model.PagingResult.MaxPrice"/>
+                                <input type="hidden" id="total-page" value="@Model.PagingResult.TotalPages"/>
+                                <ul class="pagination justify-content-start" id="pagination"></ul>
+                            </nav>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <h4 style="text-align: center">@empty</h4>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Category section end -->
+
+
+<!-- product section end -->
+<script src="~/web/js/owl.carousel.min.js"></script>
+<script src="~/lib/pagination/jquery.twbsPagination.js"></script>
+<script src="~/js/application/paging-common.js"></script>
+<script src="~/js/application/web/add-to-cart.js"></script>

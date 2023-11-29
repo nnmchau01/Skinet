@@ -1,0 +1,78 @@
+.color-whitesmoke{color: whitesmoke !important;}
+.user-avatar-custom{border-radius: 50% !important; width:25px;height: 25px;text-align: center !important}
+.user-avatar-custom-side-bar{border-radius: 50% !important; width:85px;height: 85px;cursor: pointer;}
+.btn-social-login-custom{height: 38px !important;width: 115px !important;}
+.btn-change-avatar{padding-left: 28px;font-size: 20px;padding-top: 3px;}
+.btn-change-avatar:hover{color: #4285F4; cursor: pointer;}
+#file-avatar-change{display: none;}
+#btn-submit-change-avatar{font-size: 8px;}
+#div-btn-submit-change-avatar{padding-left: 10px; display: none;}
+.user-info-side-bar{color: #687385 !important; cursor: pointer;}
+.user-info-side-bar:hover{color: #5869DA !important;}
+.login-info{color: #687385 !important; }
+.hidden-msg-text-danger{color: #e3363e !important; display: none;}
+.favorite-post{cursor: pointer !important;}
+.is-favorite{color: #e3363e!important;}
+.top-right-icon-grid-small{left: unset;right: 10px;}
+.top-lef-icon-grid-small, .top-right-icon-grid-small{position: absolute;top: 10px;border-radius: 50px;width: 30px;height: 30px;text-align: center;line-height: 30px;font-size: 12px;z-index: 3;color: #fff;-o-transition: all 0.4s ease;transition: all 0.4s ease;-webkit-transition: all 0.4s ease;-moz-transition: all 0.4s ease;transition-duration: 0.4s;-ms-transition: all 0.4s ease;}
+.btn-hover:hover{background-color:  #e3363e !important;}
+.input-invalid{border-color: #e3363e !important;}
+.hover-link:hover{color: #5869DA !important; cursor: pointer !important;}
+.hover-created-by:hover{color: #e38836 !important; cursor: pointer !important;}
+.msg-error{color: #e3363e !important; display: none;}
+.msg-error i{color: #e3363e !important;}
+.div-alert-danger{
+    color: #e3363e;
+    box-sizing: border-box;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    display: none;
+}
+.div-alert-danger span {text-align: center !important; font-size: 17px !important; font-family: "Font Awesome 5 Pro" !important;}
+.div-alert-danger i {padding-left: 10px; cursor: pointer}
+.custom-font{font-family: "Font Awesome 5 Pro"; !important;}
+.custom-font-button{font-family: "Font Awesome 5 Pro" !important; font-weight: bold !important;}
+.icon-right-input{position: absolute !important;
+    right: 50px !important;
+    padding: 16px 10px !important;
+    pointer-events: auto; !important;}
+.insta-bg-color{background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%) !important;}
+.border-avatar{border: 1px solid #3AABE4 !important;}
+.user-avatar-custom-profile{border-radius: 50% !important; width:120px !important;height: 120px !important;}
+#file-avatar-change-profile{display: none;}
+#btn-submit-change-avatar-profile{font-size: 8px;}
+#div-btn-submit-change-avatar-profile{padding-left: 10px; display: none;}
+/*.disabled-input{cursor: not-allowed !important; pointer-events: none !important;}*/
+.date-with-diff-date{}
+.date-only{}
+.diff-date{}
+.is-bookmark{color: #fd7e14!important;}
+.text-color-1{color: #007bff !important;}
+.text-color-2{color: #6610f2 !important;}
+.text-color-3{color: #6f42c1 !important;}
+.text-color-4{color: #e83e8c !important;}
+.text-color-5{color: #fd7e14 !important;}
+.text-color-6{color: #20c997 !important;}
+.text-color-7{color: #343a40 !important;}
+.text-color-8{color: #01FF70 !important;}
+.text-color-9{color: #85144b !important;}
+.text-color-10{color: #3D9970 !important;}
+.text-color-11{color: #001f3f !important;}
+.linkedin-bg{background: #0274B3 !important;}
+.bg-freeze-purple{background-color: #e5eaf5 !important;}
+.btn-edit-comment{cursor: pointer !important;color: whitesmoke !important;}
+.btn-cancel-edit-comment{cursor: pointer !important;color: whitesmoke !important;}
+.btn-delete-comment{cursor: pointer !important;color: whitesmoke !important;}
+.btn-cancel-reply-to-comment{cursor: pointer !important;color: whitesmoke !important;}
+.btn-reply{cursor: pointer;}
+.btn-reply:hover{color: #5869DA !important;}
+.btn-show-or-hide-child{cursor: pointer;}
+.btn-show-or-hide-child:hover{color: #5869DA !important;}
+.custom-font-comment{font-family: "Font Awesome 5 Pro"; !important; font-size: 18px !important;}
+.progcoder-border-dot{border: 1px dotted #ad4bd6 !important;}
+.progcoder-border{border: 1px solid #ad4bd6 !important;}
+.content-font{font-family: "Font Awesome 5 Pro",serif !important;font-size: 18px !important;}

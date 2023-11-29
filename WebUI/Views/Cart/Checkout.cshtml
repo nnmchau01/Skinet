@@ -1,0 +1,80 @@
+﻿@using Domain.Entities
+@using Domain.Constants
+@model Application.Common.Models.CurrentUserModel
+
+@{
+    var address = AppVersion.IsEnglishVersion ? "Your address" : "Địa chỉ nhận hàng";
+    var yourAddress = AppVersion.IsEnglishVersion ? "Your address" : "Địa chỉ";
+    var phone = AppVersion.IsEnglishVersion ? "Phone no" : "Số điện thoại";
+    var note = AppVersion.IsEnglishVersion ? "Email" : "Địa chỉ email";
+    var name = AppVersion.IsEnglishVersion ? "Your name" : "Họ tên";
+    var payWhenRecive = AppVersion.IsEnglishVersion ? "Pay when you get the package" : "Thanh toán khi nhận hàng";
+    var payNow = AppVersion.IsEnglishVersion ? "Place Order" : "Thanh toán ngay";
+    var payment = AppVersion.IsEnglishVersion ? "Payment" : "Loại thanh toán";
+    var required = AppVersion.IsEnglishVersion ? "This field is required." : "Trường này là bắt buộc.";
+}
+
+<!-- checkout section  -->
+<section class="checkout-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 order-2 order-lg-1">
+                <form class="checkout-form" id="frmSubmitCheckout">
+                    <div class="cf-title">@address</div>
+                    <div class="col-md-12 required">
+                        <input type="text" name="CustomerName" placeholder="@name">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+                    <div class="col-md-12 required">
+                        <input type="text" name="Address" placeholder="@yourAddress">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+                    <div class="col-md-12 required">
+                        <input type="text" name="PhoneNumber" placeholder="@phone">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+                    <div class="col-md-12 required">
+                        <input type="text" name="Note" placeholder="@note">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+
+                   
+
+                    <div class="cf-title">@payment</div>
+                    <ul class="payment-list">
+                        <li>
+                            <input type="radio" name="Payment" value="PayPal" checked="checked"/> Paypal
+                            <a href="#">
+                                <img src="~/web/img/paypal.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <input type="radio" value="VNPay" name="Payment"/> VnPay
+                            <a href="#">
+                                <img src="~/web/img/mastercart.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <input type="radio" value="MoMo" name="Payment"/> MoMo
+                            <a href="#">
+                                <img style="width: 34px !important;" src="~/web/img/momo.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <input type="radio" value="Cash" name="Payment"/> @payWhenRecive
+                        </li>
+                    </ul>
+                    <button class="site-btn submit-order-btn" id="btn-submit-order">@payNow</button>
+                </form>
+            </div>
+            <div class="col-lg-4 order-1 order-lg-2">
+                <div class="checkout-cart" id="checkout-cart">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- checkout section end -->
+
+<script src="~/js/application/web/checkout.js"></script>

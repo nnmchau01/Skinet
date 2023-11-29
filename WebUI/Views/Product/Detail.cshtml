@@ -1,0 +1,153 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model Application.Models.Product.ProductDetailModel
+
+@{
+    var detail = AppVersion.IsEnglishVersion ? "Page Detail" : "Trang chi tiết";
+    var description = AppVersion.IsEnglishVersion ? "Description" : "Miếu tả";
+    var text = "active";
+    var quantity = AppVersion.IsEnglishVersion ? "Quantity" : "Số lượng";
+    var addToCart = AppVersion.IsEnglishVersion ? "ADD TO CART" : "THÊM GIỎ HÀNG";
+    var information = AppVersion.IsEnglishVersion ? "Information" : "Thông tin thêm";
+    var brand = AppVersion.IsEnglishVersion ? "Brand" : "Thương hiệu";
+    var category = AppVersion.IsEnglishVersion ? "Category" : "Thể loại";
+    var discount = AppVersion.IsEnglishVersion ? "Discount" : "Giảm giá";
+}
+
+<!-- Page info -->
+<div class="page-top-info">
+    <div class="container">
+        <h4>@detail</h4>
+        <div class="site-pagination">
+            <a href="/">Home</a> /
+            <a href="/">Shop</a>
+        </div>
+    </div>
+</div>
+<!-- Page info end -->
+
+
+<!-- product section -->
+<section class="product-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="product-pic-zoom">
+                    <img style="border: 2px solid #f51167; width: 500px !important; height: 600px !important;" class="product-big-img" src="@Model.Images.First().LocalLinkImage" alt="">
+                </div>
+                <div class="product-thumbs" tabindex="1" style="overflow: hidden; outline: none;">
+                    <div class="product-thumbs-track">
+                        @foreach (var item in Model.Images)
+                        {
+                            <div class="pt @text" data-imgbigurl="@item.LocalLinkImage">
+                                <img style="width: 116px !important; height: 116px !important;" src="@item.LocalLinkImage" alt="">
+                            </div>
+
+                            text = "";
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 product-details">
+                @await Html.PartialAsync("_RatingStarPartial")
+                <h2 class="p-title">@Model.Name</h2>
+                <input type="hidden" id="ProductName" value="@Model.Name"/>
+                @if (Model.Discount > 0)
+                {
+                    <h3 class="p-price" style="text-decoration: line-through">@Model.Currency.ToCurrencyMoney(Model.Price)</h3>
+                    <h3 class="p-price">@Model.Currency.ToCurrencyMoney(Model.Price.CalDiscountPrice(Model.Discount))</h3>
+                }
+                else
+                {
+                    <h3 class="p-price">@Model.Currency.ToCurrencyMoney(Model.Price)</h3>
+                }
+                @if (Model.Discount > 0)
+                {
+                    <h4 class="p-stock">@discount: <span>-@Model.Discount%</span></h4>
+                }
+                <h4 class="p-stock">@brand: <span>@Model.Brand</span></h4>
+                <h4 class="p-stock">@category: <span>@Model.Category</span></h4>
+                <div class="quantity">
+                    <p>@quantity</p>
+                    <div class="pro-qty">
+                        <input type="text" id="quantity-detail" value="1">
+                    </div>
+                </div>
+
+                <a
+                    href="#"
+                    class="site-btn add-to-cart-detail"
+                    product-id="@Model.Id.ToString()">
+                    @addToCart
+                </a>
+
+                <div id="accordion" class="accordion-area">
+                    <div class="panel">
+                        <div class="panel-header" id="headingOne">
+                            <button class="panel-link active" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                                @description
+                            </button>
+                        </div>
+                        <div id="collapse1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="panel-body">
+                                <p>@Model.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header" id="headingTwo">
+                            <button class="panel-link" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                                @information
+                            </button>
+                        </div>
+                        <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="panel-body">
+                                @foreach (var item in Model.Properties)
+                                {
+                                    <p>
+                                        <strong>@item.Name:</strong> @item.Value
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-sharing">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=@AppConst.Domain/@Model.Url">
+                        <i class="fa fa-facebook"></i> Share on facebook
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<input type="hidden" id="ProductId" value="@Model.Id.ToString()"/>
+<!-- product section end -->
+<script>
+    	/*-------------------
+    		Quantity change
+    	--------------------- */
+        var proQty = $('.pro-qty');
+    	proQty.prepend('<span class="dec qtybtn">-</span>');
+    	proQty.append('<span class="inc qtybtn">+</span>');
+    	proQty.on('click', '.qtybtn', function () {
+    		var $button = $(this);
+    		var oldValue = $button.parent().find('input').val();
+    		if ($button.hasClass('inc')) {
+    			var newVal = parseFloat(oldValue) + 1;
+    		} else {
+    			// Don't allow decrementing below zero
+    			if (oldValue > 0) {
+    				var newVal = parseFloat(oldValue) - 1;
+    			} else {
+    				newVal = 0;
+    			}
+    		}
+    		$button.parent().find('input').val(newVal);
+            setCartLocal(newVal, $('#ProductId').val());
+    	});
+</script>
+
+<script src="~/js/application/web/add-to-cart.js"></script>
+<script src="~/js/application/web/rating.js" asp-append-version="true"></script>

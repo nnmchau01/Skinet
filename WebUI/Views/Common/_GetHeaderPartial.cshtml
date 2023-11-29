@@ -1,0 +1,27 @@
+﻿@using Domain.Entities
+@using Domain.Constants
+@model Application.Common.Models.CurrentUserModel
+
+@{
+    Layout = null;
+    var signIn = AppVersion.IsEnglishVersion ? "Sign in" : "Đăng nhập";
+    var signUp = AppVersion.IsEnglishVersion ? "Sign up" : "Đăng ký";
+    var logout = AppVersion.IsEnglishVersion ? "Logout" : "Đăng xuất";
+    var hello = AppVersion.IsEnglishVersion ? "Hello" : "Xin chào";
+}
+
+@if (string.IsNullOrEmpty(Model?.Id))
+{
+    <i class="flaticon-profile"></i>
+    <a href="#" onclick="signInOrSignUp(true)">@signIn | </a>
+    <a href="#" onclick="signInOrSignUp(false)">@signUp</a>
+
+    @(await Html.PartialAsync("_SignInSignUpForm"))
+}
+else
+{
+    <a href="#">@hello, <strong>@Model.FullName</strong></a>
+    <a href="/Authenticate/Logout">@logout</a>
+}
+
+<script src="~/js/application/web/authen.js"></script>

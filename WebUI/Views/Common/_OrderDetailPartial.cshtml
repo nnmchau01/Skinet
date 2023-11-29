@@ -1,0 +1,156 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model Application.Models.Order.OrderDetailModel
+
+@{
+    Layout = null;
+
+    var title = AppVersion.IsEnglishVersion ? "Tracking Order" : "Chi tiết hóa đơn";
+    var orderCode = AppVersion.IsEnglishVersion ? "Order Code" : "Mã hóa đơn";
+    var customerName = AppVersion.IsEnglishVersion ? "Customer Name" : "Tên khách hàng";
+    var address = AppVersion.IsEnglishVersion ? "Address" : "Địa chỉ";
+    var phoneNumber = AppVersion.IsEnglishVersion ? "Phone Number" : "SĐT";
+    var note = AppVersion.IsEnglishVersion ? "Note" : "Ghi chú";
+    var paymentMethod = AppVersion.IsEnglishVersion ? "Payment Method" : "Thanh toán bằng";
+    var orderStatus = AppVersion.IsEnglishVersion ? "Order Status" : "Trạng thái hóa đơn";
+    var paymentStatus = AppVersion.IsEnglishVersion ? "Payment Status" : "Trạng thái thanh toán";
+    var discountPercent = AppVersion.IsEnglishVersion ? "Discount Percent" : "Giảm giá";
+    var totalAmount = AppVersion.IsEnglishVersion ? "Total Amount" : "Tổng thanh toán";
+    var items = AppVersion.IsEnglishVersion ? "Items" : "Giỏ hàng";
+    var currency = AppVersion.IsEnglishVersion ? "$" : "đ";
+    var product = AppVersion.IsEnglishVersion ? "Product" : "Sản phẩm";
+    var quantity = AppVersion.IsEnglishVersion ? "Quantity" : "Số lượng";
+    var price = AppVersion.IsEnglishVersion ? "Price" : "Thành tiền";
+    var notFound = AppVersion.IsEnglishVersion ? "Not Found" : "Không tìm thấy đơn hàng";
+}
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+
+<div class="modal-header">
+    <h4 class="modal-title">@title</h4>
+    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+
+
+@if (string.IsNullOrEmpty(@Model.Code))
+{
+    <p style="text-align: center; font-size: 20px">@notFound</p>
+}
+else
+{
+    <div class="modal-body">
+        <div>
+            <p style="font-size: 18px">
+                <strong>@orderCode:</strong> @Model.Code
+            </p>
+            <p style="font-size: 18px">
+                <strong>@customerName:</strong> @Model.CustomerName
+            </p>
+            <p style="font-size: 18px">
+                <strong>@address:</strong> @Model.Address
+            </p>
+            <p style="font-size: 18px">
+                <strong>@phoneNumber:</strong> @Model.PhoneNumber
+            </p>
+            <p style="font-size: 18px">
+                <strong>@paymentMethod:</strong> @Model.PaymentMethod
+            </p>
+            <p style="font-size: 18px">
+                <strong>@orderStatus:</strong> 
+                @switch (@Model.OrderStatusCode)
+                {
+                    case "AwaitingShip":
+                        <span title="@Model.OrderStatus" class="text-warning">@Model.OrderStatus</span>
+                        break;
+                    case "Shipping":
+                        <span title="@Model.OrderStatus" class="text-warning">@Model.OrderStatus</span>
+                        break;
+                    case "Reject":
+                        <span title="@Model.OrderStatus" class="text-secondary">@Model.OrderStatus</span>
+                        break;
+                    case "Cancel":
+                        <span title="@Model.OrderStatus" class="text-primary">@Model.OrderStatus</span>
+                        break;
+                    case "Received":
+                        <span title="@Model.OrderStatus" class="text-success">@Model.OrderStatus</span>
+                        break;
+                    default:
+                        <span title="@Model.OrderStatus" class="text-primary">@Model.OrderStatus</span>
+                        break;
+                }
+            </p>
+            <p style="font-size: 18px">
+                <strong>@paymentStatus:</strong> 
+                @switch (@Model.PaymentStatusCode)
+                {
+                    case "Paid":
+                        <span title="@Model.PaymentStatus" class="text-success">@Model.PaymentStatus</span>
+                        break;
+                    case "WaitingPay":
+                        <span title="@Model.PaymentStatus" class="text-warning">@Model.PaymentStatus</span>
+                        break;
+                    default:
+                        <span title="@Model.PaymentStatus" class="text-primary">@Model.PaymentStatus</span>
+                        break;
+                }
+            </p>
+            <p style="font-size: 18px"><strong>@discountPercent:</strong> @Model.DiscountPercent%</p>
+            <p style="font-size: 18px">
+                <strong>@totalAmount:</strong> @currency.ToCurrencyMoney(Model.TotalAmount)
+            </p>
+            <p style="font-size: 18px">
+                <strong>@note:</strong> @Model.Note
+            </p>
+            <p style="font-size: 18px">
+                <strong>@items:</strong>
+            </p>
+            <table id="customers">
+                <tr>
+                    <th>@product</th>
+                    <th>@quantity</th>
+                    <th>@price</th>
+                </tr>
+                @if (Model.Items?.Count > 0)
+                {
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                <a href="/Product/Detail?id=@item.ProductId.ToString()" target="_blank">
+                                    <img style="width: 50px !important; height: 50px !important;" src="@item.DefaultImage" alt="">
+                                </a>
+                                <span>@item.ProductName</span>
+                            </td>
+                            <td>@item.Quantity</td>
+                            <td>@currency.ToCurrencyMoney(@item.TotalPriceEachRowItem)</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+}

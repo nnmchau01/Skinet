@@ -1,0 +1,45 @@
+﻿@using Domain.Entities
+@using Domain.Constants
+@using Domain.Helpers
+@model List<Application.Models.Cart.CartProductModel>
+
+@{
+    Layout = null;
+    var yourCart = AppVersion.IsEnglishVersion ? "Your Cart" : "Giỏ hàng của bạn";
+    var total = AppVersion.IsEnglishVersion ? "Total" : "Tổng thanh toán";
+    var product = AppVersion.IsEnglishVersion ? "Product" : "Sản phẩm";
+    var quantity = AppVersion.IsEnglishVersion ? "Quantity" : "Số lượng";
+    var price = AppVersion.IsEnglishVersion ? "Price" : "Thành tiền";
+    var currency = AppVersion.IsEnglishVersion ? "$" : "đ";
+    decimal totalAll = 0;
+
+    if (Model?.Count > 0)
+    {
+        var model = Model.First();
+        totalAll = (decimal)model.TotalPriceAll;
+    }
+}
+
+<h3>@yourCart</h3>
+
+<ul class="product-list" id="cart-list">
+    @if (Model?.Count > 0)
+    {
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="pl-thumb">
+                    <a href="/Product/Detail?id=@item.ProductId.ToString()" target="_blank">
+                        <img style="border: 2px solid #f51167; width: 72px !important; height: 72px !important;" src="@item.DefaultImage" alt="">
+                    </a>
+                </div>
+                <h6>@item.ProductName</h6>
+                <p>@item.Currency.ToCurrencyMoney(item.PriceEachItem) x @item.Quantity</p>
+            </li>
+        }
+    }
+</ul>
+<ul class="price-list">
+    <li class="total">@total</li>
+    <li class="total">@currency.ToCurrencyMoney(totalAll)</li>
+</ul>

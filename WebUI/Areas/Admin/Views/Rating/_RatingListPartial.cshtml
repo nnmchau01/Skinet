@@ -1,0 +1,52 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model List<Application.Models.Rating.RatingDetailModel>
+
+@{
+    Layout = null;
+
+    var productName = AppVersion.IsEnglishVersion ? "Product name" : "Tên sản phẩm";
+    var brand = AppVersion.IsEnglishVersion ? "Brand" : "Thương hiệu";
+    var category = AppVersion.IsEnglishVersion ? "Category" : "Thể loại";
+    var starPoint = AppVersion.IsEnglishVersion ? "Star Point" : "Điểm đánh giá";
+    var text = AppVersion.IsEnglishVersion ? "Are you sure want to delete?" : "Bạn có chắc muốn xóa?";
+    var title = AppVersion.IsEnglishVersion ? "Delete confirmation" : "Xác nhận xóa";
+}
+
+<input type="hidden" value="@text" id="TextDelete"/>
+<input type="hidden" value="@title" id="TitleDelete"/>
+
+<div class="dt-ext table-responsive">
+    <table class="display" id="grid-datatable">
+        <thead>
+        <tr>
+            <th>@productName</th>
+            <th>@brand</th>
+            <th>@category</th>
+            <th>@starPoint</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="/Product/Detail?id=@item.ProductId.ToString()">
+                        <img style="border: 2px solid #f51167; width: 50px !important; height: 50px !important;" src="@item.DefaultImage" alt="">
+                        @item.ProductName
+                    </a>
+                </td>
+                <td>@item.Brand</td>
+                <td>@item.Category</td>
+                <td>@item.AverageRatingStart</td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>
+
+<script src="~/admin/assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
+<script src="~/admin/assets/js/datatable/datatable-extension/dataTables.responsive.min.js"></script>
+<script src="~/js/application/admin/datatable.js"></script>

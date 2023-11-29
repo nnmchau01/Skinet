@@ -1,0 +1,57 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model List<Application.Models.Service.ServiceDetailModel>
+
+@{
+    Layout = null;
+
+    var serviceName = AppVersion.IsEnglishVersion ? "Service name" : "Tên dịch vụ";
+    var price = AppVersion.IsEnglishVersion ? "Price" : "Giá dịch vụ";
+    var createdAt = AppVersion.IsEnglishVersion ? "Created at" : "Tạo ngày";
+    var updatedAt = AppVersion.IsEnglishVersion ? "Updated at" : "Sửa ngày";
+    var action = AppVersion.IsEnglishVersion ? "Action" : "Thao tác";
+    var text = AppVersion.IsEnglishVersion ? "Are you sure want to delete?" : "Bạn có chắc muốn xóa?";
+    var title = AppVersion.IsEnglishVersion ? "Delete confirmation" : "Xác nhận xóa";
+}
+
+<input type="hidden" value="@text" id="TextDelete"/>
+<input type="hidden" value="@title" id="TitleDelete"/>
+
+<div class="dt-ext table-responsive">
+    <table class="display" id="grid-datatable">
+        <thead>
+        <tr>
+            <th>@serviceName</th>
+            <th>@price</th>
+            <th>@createdAt</th>
+            <th>@updatedAt</th>
+            <th>@action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ServiceName</td>
+                <td>@item.Price.FormatMoney()</td>
+                <td>@item.CreatedAt.ToDatetimeString()</td>
+                <td>@item.UpdatedAt.ToDatetimeStringNullable()</td>
+                <td>
+                    <div style="text-align: center;">
+                        <i class="fa fa-trash-o hover-link btn-delete" style="color: red" title="Delete" data-id="@item.Id.ToString()">
+                        </i>
+                        | <i class="fa fa-pencil hover-link btn-edit" style="color: #0a03ff" title="Edit" data-id="@item.Id.ToString()"></i>
+                    </div>
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>
+
+<script src="~/admin/assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
+<script src="~/admin/assets/js/datatable/datatable-extension/dataTables.responsive.min.js"></script>
+<script src="~/js/application/admin/datatable.js"></script>
+<script src="~/js/application/admin/service/action.js"></script>

@@ -1,0 +1,38 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model Application.Models.Promotion.PromotionDetailModel
+
+@{
+    Layout = null;
+
+    var title = AppVersion.IsEnglishVersion ? "Update Promotion" : "Cập nhật mã giảm giá";
+    var required = AppVersion.IsEnglishVersion ? "This field is required." : "Trường này là bắt buộc.";
+    var save = AppVersion.IsEnglishVersion ? "Save" : "Cập nhật";
+    var discountPercent = AppVersion.IsEnglishVersion ? "Discount Percent" : "Giảm giá (%)";
+    var number = AppVersion.IsEnglishVersion ? "Please input valid number > 0" : "Vui lòng nhập số nguyên > 0";
+}
+
+<div class="modal-header">
+    <h4 class="modal-title">@title</h4>
+    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form id="frmSubmit" class="contact-form">
+        <div class="form-group required">
+            <input class="input form-control" type="text" value="@Model.DiscountPercent" name="DiscountPercent" id="DiscountPercent" placeholder="@discountPercent">
+            <span class="text-danger" style="display: none;">@required</span>
+            <span class="text-danger" id="sDiscountPercent" style="display: none;">@number</span>
+        </div>
+
+        <input class="input form-control" type="hidden" value="@Model.Id.ToString()" name="Id">
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary text-center" id="btn-submit-update">@save</button>
+</div>
+
+<script src="~/js/application/admin/promotion/update.js"></script>

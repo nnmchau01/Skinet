@@ -1,0 +1,45 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model Application.Models.User.UserDetailModel
+
+@{
+    Layout = null;
+
+    var title = AppVersion.IsEnglishVersion ? "User Info" : "Thông tin người dùng";
+    var userName = AppVersion.IsEnglishVersion ? "User name" : "Tên tài khoản";
+    var fullName = AppVersion.IsEnglishVersion ? "Ful name" : "Họ tên";
+    var email = AppVersion.IsEnglishVersion ? "Email" : "Địa chỉ email";
+    var phoneNumber = AppVersion.IsEnglishVersion ? "Phone Number" : "SĐT";
+    var roles = AppVersion.IsEnglishVersion ? "Roles" : "Quyền quản trị";
+    var address = AppVersion.IsEnglishVersion ? "Address" : "Địa chỉ";
+}
+
+<div class="modal-header">
+    <h4 class="modal-title">@title</h4>
+    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form id="frmSubmit" class="contact-form">
+        <div class="form-group required">
+            <p style="font-size: 18px"><strong>@userName</strong>: @Model.UserName</p>
+        </div>
+        <div class="form-group required">
+            <p style="font-size: 18px"><strong>@fullName</strong>: @Model.FullName</p>
+        </div>
+        <div class="form-group required">
+            <p style="font-size: 18px"><strong>@email</strong>: @Model.Email</p>
+        </div>
+        <div class="form-group required">
+            <p style="font-size: 18px"><strong>@phoneNumber</strong>: @Model.PhoneNumber</p>
+        </div>
+        <div class="form-group required">
+            <p style="font-size: 18px"><strong>@roles</strong>: @Model.Roles</p>
+        </div>
+        <div class="form-group required">
+            <p style="font-size: 18px"><strong>@address</strong>: @Model.Address</p>
+        </div>
+    </form>
+</div>

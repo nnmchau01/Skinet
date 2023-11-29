@@ -1,0 +1,77 @@
+﻿@using Domain.Constants
+@model Application.Models.Menu.MenuModel
+
+@{
+    Layout = null;
+    var home = AppVersion.IsEnglishVersion ? "Home" : "Trang chủ";
+    var women = AppVersion.IsEnglishVersion ? "Women" : "Đồ nữ";
+    var men = AppVersion.IsEnglishVersion ? "Men" : "Đồ Nam";
+    var brand = AppVersion.IsEnglishVersion ? "Brand" : "Thương hiệu";
+    var category = AppVersion.IsEnglishVersion ? "Category" : "Thể loại";
+    var adminHome = AppVersion.IsEnglishVersion ? "Admin Home" : "Trang quản trị";
+    var initData = AppVersion.IsEnglishVersion ? "Init Data" : "Tạo dữ liệu";
+    var all = AppVersion.IsEnglishVersion ? "All Product" : "Tất cả sản phẩm";
+    var checkOrderDetail = AppVersion.IsEnglishVersion ? "Traking Order" : "Kiểm tra đơn hàng";
+    var moreOption = AppVersion.IsEnglishVersion ? "More Option" : "Menu khác";
+    var promotions = AppVersion.IsEnglishVersion ? "Promotions" : "Mã giảm giá";
+    var services = AppVersion.IsEnglishVersion ? "Services" : "Dịch vụ";
+}
+
+<!-- menu -->
+<ul class="main-menu">
+    <li>
+        <a href="/">@home</a>
+    </li>
+    
+    <li>
+        <a href="/Product/Search">
+            @all
+            <span class="new">New</span>
+        </a>
+    </li>
+    <li>
+        <a href="/Service/Index">@services</a>
+    </li>
+    <li>
+        <a href="#">@brand</a>
+        <ul class="sub-menu">
+            @foreach (var item in Model.Brands)
+            {
+                <li>
+                    <a href="/Product/Brand?value=@item.Code">@item.Name</a>
+                </li>
+            }
+        </ul>
+    </li>
+    <li>
+        <a href="#">@category</a>
+        <ul class="sub-menu">
+            @foreach (var item in Model.Categories)
+            {
+                <li>
+                    <a href="/Product/Category?value=@item.Code">@item.Name</a>
+                </li>
+            }
+        </ul>
+    </li>
+    <li>
+        <a href="#">@moreOption</a>
+        <ul class="sub-menu">
+            <li>
+                <a href="#" onclick="onViewPromotions();">@promotions</a>
+            </li>
+            <li>
+                <a href="#" onclick="openModalCheckOrderWeb();">@checkOrderDetail</a>
+            </li>
+            <li>
+                <a href="/Common/InitData">@initData</a>
+            </li>
+            @if (Model.IsShowButtonAdmin)
+            {
+                <li>
+                    <a href="/Admin/Home">@adminHome</a>
+                </li>
+            }
+        </ul>
+    </li>
+</ul>

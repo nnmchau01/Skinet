@@ -1,0 +1,173 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model List<Application.Models.Product.ProductDetailModel>
+
+@{
+    var latestProduct = AppVersion.IsEnglishVersion ? "LATEST PRODUCTS" : "SẢN PHẨM MỚI NHẤT";
+    var addToCart = AppVersion.IsEnglishVersion ? "ADD TO CART" : "THÊM GIỎ HÀNG";
+    var loadMore = AppVersion.IsEnglishVersion ? "LOAD MORE" : "HIỂN THỊ THÊM";
+    var count = 0;
+}
+
+<!-- Hero section -->
+<section class="hero-section">
+    <div class="hero-slider owl-carousel">
+        <div class="hs-item set-bg" data-setbg="./img/common/bg.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 text-white">
+                        <span>New Arrivals</span>
+                        <h2>Richard Mille</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                        <a href="#" class="site-btn sb-line">DISCOVER</a>
+                        <a href="#" class="site-btn sb-white">ADD TO CART</a>
+                    </div>
+                </div>
+                <div class="offer-card text-white">
+                    <span>from</span>
+                    <h2>$29</h2>
+                    <p>SHOP NOW</p>
+                </div>
+            </div>
+        </div>
+        <div class="hs-item set-bg" data-setbg="./img/common/bg-2.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 text-white">
+                        <span>New Arrivals</span>
+                        <h2>Patek Philippe</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                        <a href="#" class="site-btn sb-line">DISCOVER</a>
+                        <a href="#" class="site-btn sb-white">ADD TO CART</a>
+                    </div>
+                </div>
+                <div class="offer-card text-white">
+                    <span>from</span>
+                    <h2>$29</h2>
+                    <p>SHOP NOW</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="slide-num-holder" id="snh-1"></div>
+    </div>
+</section>
+<!-- Hero section end -->
+
+
+<!-- Features section -->
+<section class="features-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 p-0 feature">
+                <div class="feature-inner">
+                    <div class="feature-icon">
+                        <img src="~/web/img/icons/1.png" alt="#">
+                    </div>
+                    <h2>Fast Secure Payments</h2>
+                </div>
+            </div>
+            <div class="col-md-4 p-0 feature">
+                <div class="feature-inner">
+                    <div class="feature-icon">
+                        <img src="~/web/img/icons/2.png" alt="#">
+                    </div>
+                    <h2>Premium Products</h2>
+                </div>
+            </div>
+            <div class="col-md-4 p-0 feature">
+                <div class="feature-inner">
+                    <div class="feature-icon">
+                        <img src="~/web/img/icons/3.png" alt="#">
+                    </div>
+                    <h2>Free & fast Delivery</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Features section end -->
+
+
+<!-- Product filter section -->
+<section class="product-filter-section">
+    <div class="container">
+        <div class="section-title">
+            <hr/>
+            <h2>@latestProduct</h2>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                if (count == 8)
+                {
+                    break;
+                }
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            @if (item.Discount > 0)
+                            {
+                                <div class="tag-sale">-@item.Discount%</div>
+                            }
+                            <a href="/p/@item.Url">
+                                <img style="border: 2px solid #f51167; width: 263px !important;height: 408px !important;" src="@item.DefaultImage" alt="">
+                            </a>
+                            <div class="pi-links">
+                                <a
+                                    href="#"
+                                    class="add-card add-to-cart"
+                                    product-id="@item.Id.ToString()">
+                                    <i class="flaticon-bag"></i><span>@addToCart</span>
+                                </a>
+                                <a href="#" class="wishlist-btn">
+                                    <i class="flaticon-heart"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6>@item.Currency.ToCurrencyMoney(item.Price)</h6>
+                            <p>@item.Name</p>
+                        </div>
+                    </div>
+                </div>
+                count++;
+            }
+        </div>
+        <div class="text-center pt-5">
+            <button class="site-btn sb-line sb-dark" type="button" id="btn-load-more">@loadMore</button>
+        </div>
+    </div>
+</section>
+<!-- Product filter section end -->
+
+<script src="~/web/js/owl.carousel.min.js"></script>
+<script src="~/js/application/web/add-to-cart.js"></script>
+<script>
+    var hero_s = $(".hero-slider");
+    hero_s.owlCarousel({
+        loop: true,
+        margin: 0,
+        nav: true,
+        items: 1,
+        dots: true,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+        navText: ['<i class="flaticon-left-arrow-1"></i>', '<i class="flaticon-right-arrow-1"></i>'],
+        smartSpeed: 1200,
+        autoHeight: false,
+        autoplay: true,
+        onInitialized: function () {
+            var a = this.items().length;
+            $("#snh-1").html("<span>1</span><span>" + a + "</span>");
+        }
+    }).on("changed.owl.carousel", function (a) {
+        var b = --a.item.index, a = a.item.count;
+        $("#snh-1").html("<span> " + (1 > b ? b + a : b > a ? b - a : b) + "</span><span>" + a + "</span>");
+
+    });
+
+    hero_s.append('<div class="slider-nav-warp"><div class="slider-nav"></div></div>');
+    $(".hero-slider .owl-nav, .hero-slider .owl-dots").appendTo('.slider-nav');
+</script>

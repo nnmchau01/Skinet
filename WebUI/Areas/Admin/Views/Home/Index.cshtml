@@ -1,0 +1,55 @@
+﻿@using Domain.Constants
+@{
+    Layout = "_LayoutAdmin";
+    var title = AppVersion.IsEnglishVersion ? "Report" : "Báo cáo";
+}
+
+<div class="page-body">
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 style="text-align: center">@title</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Zero Configuration  Starts-->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="cad-body" id="div-chart">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="Year" class="label-text-black">
+                                    Year
+                                </label>
+                                <select class="form-control" id="Year"></select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="Month" class="label-text-black">
+                                    Month
+                                </label>
+                                <select class="form-control" id="Month"></select>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <button style="float: right" class="btn btn-success" id="btn-generate-report-by-month">
+                                    <i class="fa fa-file" aria-hidden="true"></i> Generate
+                                </button>
+                            </div>
+                        </div>
+                        <div id="resizable-report-by-month">
+                            <div id="report-by-month" style="height: 100%; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Zero Configuration  Ends-->
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>
+
+<script src="~/js/application/admin/chart-report/chart-report-summary.js"></script>

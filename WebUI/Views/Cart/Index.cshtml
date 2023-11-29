@@ -1,0 +1,40 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model List<Application.Models.Product.ProductDetailModel>
+
+@{
+    var enterPromo = AppVersion.IsEnglishVersion ? "Enter promo code" : "Nhập mã giảm giá";
+    var getPromotion = AppVersion.IsEnglishVersion ? "Submit" : "Lấy mã giảm giá";
+    var continueShopping = AppVersion.IsEnglishVersion ? "Continue Shopping" : "Tiếp tục mua hàng";
+    var checkout = AppVersion.IsEnglishVersion ? "Proceed to checkout" : "Thanh toán ngay";
+    var required = AppVersion.IsEnglishVersion ? "This field is required." : "Trường này là bắt buộc.";
+    var invalidCode = AppVersion.IsEnglishVersion ? "Promotion has expired." : "Mã giảm giá đã hết hạn.";
+    var validCode = AppVersion.IsEnglishVersion ? "This Promo is discount" : "Mã đã được áp dụng giảm";
+}
+
+<!-- cart section end -->
+<section class="cart-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-table" id="your-cart"></div>
+            </div>
+            <div class="col-lg-4 card-right">
+                <form class="promo-code-form" id="frmPromotion">
+                    <input type="text" id="PromotionCode" placeholder="@enterPromo">
+                    <span class="text-danger" id="PRequired" style="display: none;">@required</span>
+                    <span class="text-info" id="PValid" style="display: none;">@validCode</span>
+                    <span class="text-danger" id="PInvalid" style="display: none;">@invalidCode</span>
+
+                </form>
+                <button class="btn btn-primary" id="btn-get-promotion" type="button">@getPromotion</button>
+                <hr/>
+                <a href="/Cart/Checkout" class="site-btn">@checkout</a>
+                <a href="/Product/Search" class="site-btn sb-dark">@continueShopping</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- cart section end -->
+
+<script src="~/js/application/web/cart-management.js"></script>

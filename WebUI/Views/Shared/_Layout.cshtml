@@ -1,0 +1,123 @@
+﻿@using Domain.Constants
+@{
+    var orderCheck = AppVersion.IsEnglishVersion ? "Tracking Order" : "Kiểm tra đơn hàng";
+    var check = AppVersion.IsEnglishVersion ? "Check" : "Kiểm tra";
+    var codeText = AppVersion.IsEnglishVersion ? "Code" : "Mã đơn hàng";
+    var placeholderCode = AppVersion.IsEnglishVersion ? "Enter order code" : "Vui lòng nhập mã hóa đơn tại đây";
+    var required = AppVersion.IsEnglishVersion ? "This field is required." : "Trường này là bắt buộc.";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Skinet</title>
+
+    <!--ProG Coder-->
+    <link href="~/css/loading.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="~/lib/toast/jquery.toast.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/social-login-button.css">
+    <link rel="stylesheet" href="~/css/custom.min.css">
+    <link rel="stylesheet" href="~/lib/silder-range/css/ion.rangeSlider.min.css">
+
+    <script src="~/lib/jquery/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/toast/jquery.toast.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+
+    <script src="~/js/application/common.js"></script>
+    <script src="~/js/application/handle-ajax.js"></script>
+    <!--ProG Coder-->
+
+    <link rel="stylesheet" href="~/web/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/web/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="~/web/css/flaticon.css"/>
+    <link rel="stylesheet" href="~/web/css/slicknav.min.css"/>
+    <link rel="stylesheet" href="~/web/css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="~/web/css/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="~/web/css/animate.css"/>
+    <link rel="stylesheet" href="~/web/css/style.css"/>
+
+    <script src="~/lib/silder-range/js/ion.rangeSlider.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="~/lib/select2/select2.css">
+    <script src="~/lib/select2/select2.full.min.js"></script>
+    
+</head>
+<body>
+
+<input type="hidden" id="IsEnglishVersion" value="@AppVersion.IsEnglishVersion.ToString().ToLower()"/>
+
+<div class="loader-wrapper" id="loading" style="opacity: 70% !important; display: none">
+    <div class="loader loader-7">
+        <div class="line line1"></div>
+        <div class="line line2"></div>
+        <div class="line line3"></div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_HeaderPartial")
+
+@RenderBody()
+
+@await Html.PartialAsync("_FooterPartial")
+
+<div class="modal fade" id="modal-popup-order-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="modal-body-order-detail"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-popup-order-detail-check" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@orderCheck</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="OrderCode">
+                    @codeText
+                </label>
+                <input class="form-control" id="OrderCode" placeholder="@placeholderCode"/>
+                <span class="text-danger" id="sOrderCode" style="display: none;">@required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" id="btn-check-order">@check</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery Plugins -->
+
+<script src="~/web/js/bootstrap.min.js"></script>
+<script src="~/web/js/jquery.slicknav.min.js"></script>
+<script src="~/web/js/jquery.nicescroll.min.js"></script>
+<script src="~/web/js/jquery.zoom.min.js"></script>
+<script src="~/web/js/jquery-ui.min.js"></script>
+<script src="~/web/js/main.js"></script>
+
+<!--ProG Coder-->
+<script src="~/lib/fontawesome/fontawesome.min.js"></script>
+<script src="~/js/application/web/layout.js"></script>
+<script src="~/lib/signalr/signalr.min.js"></script>
+<script src="~/js/application/realtime.js"></script>
+<!--ProG Coder-->
+
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/64e6e2e994cf5d49dc6c2fe1/1h8iucol9';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+</body>
+</html>

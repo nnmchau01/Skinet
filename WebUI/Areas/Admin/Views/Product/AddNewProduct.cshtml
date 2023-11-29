@@ -1,0 +1,200 @@
+﻿@using Domain.Constants
+@model Application.Models.Product.ProductFilterModel
+
+@{
+    Layout = "_LayoutAdmin";
+    var title = AppVersion.IsEnglishVersion ? "Create New Product" : "Tạo mới sản phẩm";
+    var productName = AppVersion.IsEnglishVersion ? "Product Name" : "Tên sản phẩm";
+    var category = AppVersion.IsEnglishVersion ? "Category" : "Thể loại";
+    var brand = AppVersion.IsEnglishVersion ? "Brand" : "Thương hiệu";
+    var save = AppVersion.IsEnglishVersion ? "Save" : "Tạo mới";
+    var description = AppVersion.IsEnglishVersion ? "Description" : "Miêu tả sản phẩm";
+    var currency = AppVersion.IsEnglishVersion ? "Currency" : "Tiền tệ";
+    var image = AppVersion.IsEnglishVersion ? "Images" : "Hình ảnh";
+    var property = AppVersion.IsEnglishVersion ? "Property" : "Thuộc tính sản phẩm";
+    var moreProperty = AppVersion.IsEnglishVersion ? "Add property" : "Thêm thuộc tính";
+    var numProperty = AppVersion.IsEnglishVersion ? "Number of property: " : "Số thuộc tính: ";
+    var close = AppVersion.IsEnglishVersion ? "Close" : "Thoát";
+    var name = AppVersion.IsEnglishVersion ? "Name" : "Tên thuộc tính";
+    var value = AppVersion.IsEnglishVersion ? "Value" : "Giá trị";
+    var newProductId = Guid.NewGuid().ToString();
+    var required = AppVersion.IsEnglishVersion ? "This field is required." : "Trường này là bắt buộc.";
+    var duplicate = AppVersion.IsEnglishVersion ? "This field is duplicated." : "Trường này đã tồn tại.";
+    var saveChange = AppVersion.IsEnglishVersion ? "Save Changes" : "Lưu thay đổi";
+    var price = AppVersion.IsEnglishVersion ? "Price" : "Giá sản phẩm";
+    var validPrice = AppVersion.IsEnglishVersion ? "Price is invalid" : "Giá tiền không đúng định dạng";
+}
+<input type="hidden" id="NewProductId" value="@newProductId"/>
+<input type="hidden" id="Required" value="@required"/>
+<input type="hidden" id="Duplicate" value="@duplicate"/>
+
+<div class="page-body">
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 style="text-align: center">@title</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="ProductName">
+                                        @productName <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" id="ProductName" type="text" data-original-title="" title="">
+                                    <span class="text-danger required" id="sProductName" style="display: none;">@required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="Category">
+                                        @category <span class="text-danger">*</span>
+                                    </label>
+                                    <select id="Category" class="form-control btn-square">
+                                        <option value=""></option>
+                                        @foreach (var item in Model.Categories)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                    <span class="text-danger required" id="sCategory" style="display: none;">@required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="Brand">
+                                        @brand <span class="text-danger">*</span>
+                                    </label>
+                                    <select id="Brand" class="form-control btn-square">
+                                        <option value=""></option>
+                                        @foreach (var item in Model.Brands)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                    <span class="text-danger required" id="sBrand" style="display: none;">@required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="Price">
+                                        @price <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" id="Price" type="text" data-original-title="" title="">
+                                    <span class="text-danger required" id="sPrice" style="display: none;">@required</span>
+                                    <span class="text-danger required" id="sPrice2" style="display: none;">@validPrice</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="Property">
+                                        @property
+                                    </label>
+                                    <button class="btn btn-primary " id="Property" type="button">@moreProperty</button>
+                                    <span>
+                                        @numProperty <strong id="total-property">0</strong>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="Images">
+                                        @image <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" type="file" accept="image/png, image/gif, image/jpeg, image/jpg" id="Images" name="files" multiple>
+                                    <span class="text-danger required" id="sImages" style="display: none;">@required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p style="font-size: 14px">
+                                    @currency <span class="text-danger">*</span>
+                                </p>
+                            </div>
+                            <div class="col">
+                                <div class="form-group m-t-15 m-checkbox-inline mb-0 custom-radio-ml">
+                                    <div class="radio radio-primary">
+                                        <input id="VND" type="radio" name="Currency" value="đ" checked="checked" data-original-title="" title="">
+                                        <label class="mb-0" for="VND">VND</label>
+                                    </div>
+                                    <div class="radio radio-primary">
+                                        <input id="USD" type="radio" name="Currency" value="$" data-original-title="" title="">
+                                        <label class="mb-0" for="USD">USD</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="Description">@description</label>
+                                    <textarea class="form-control" id="Description" name="editor1" cols="30" rows="10"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <button class="btn btn-success" id="btn-save" type="button">@save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>
+
+<div class="modal fade" id="modal-property" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="modal-modal-sign-in-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">@property</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <div class="form-group">
+                        <button class="btn btn-primary" id="btn-add-more" type="button">@moreProperty</button>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>@name</strong>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>@value</strong>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div id="div-add-new-property"></div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">@close</button>
+                <button class="btn btn-success" id="btn-add-property" type="button">@saveChange</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/application/admin/product/add-new.js"></script>

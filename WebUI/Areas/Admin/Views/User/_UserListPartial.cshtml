@@ -1,0 +1,69 @@
+﻿@using Domain.Constants
+@using Domain.Helpers
+@model List<Application.Models.User.UserDetailModel>
+
+@{
+    Layout = null;
+
+    var userName = AppVersion.IsEnglishVersion ? "User name" : "Tên tài khoản";
+    var fullName = AppVersion.IsEnglishVersion ? "Ful name" : "Họ tên";
+    var email = AppVersion.IsEnglishVersion ? "Email" : "Địa chỉ email";
+    var phoneNumber = AppVersion.IsEnglishVersion ? "Phone Number" : "SĐT";
+    var roles = AppVersion.IsEnglishVersion ? "Roles" : "Quyền quản trị";
+    var createdAt = AppVersion.IsEnglishVersion ? "Created at" : "Tạo ngày";
+    var updatedAt = AppVersion.IsEnglishVersion ? "Updated at" : "Sửa ngày";
+    var action = AppVersion.IsEnglishVersion ? "Action" : "Thao tác";
+    var text = AppVersion.IsEnglishVersion ? "Are you sure want to delete?" : "Bạn có chắc muốn xóa?";
+    var title = AppVersion.IsEnglishVersion ? "Delete confirmation" : "Xác nhận xóa";
+}
+
+<input type="hidden" value="@text" id="TextDelete" />
+<input type="hidden" value="@title" id="TitleDelete" />
+
+<div class="dt-ext table-responsive">
+    <table class="display" id="grid-datatable">
+        <thead>
+        <tr>
+            <th>@userName</th>
+            <th>@fullName</th>
+            <th>@email</th>
+            <th>@phoneNumber</th>
+            <th>@roles</th>
+            <th>@createdAt</th>
+            <th>@updatedAt</th>
+            <th>@action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.FullName</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Roles</td>
+                <td>@item.CreatedAt.ToDatetimeString()</td>
+                <td>@item.UpdatedAt.ToDatetimeStringNullable()</td>
+                <td>
+                    <div style="text-align: center;">
+                        <i class="fa fa-eye hover-link btn-view-detail" style="color: #9ad717" title="Review" data-id="@item.Id.ToString()"></i>
+                        |
+                        <i class="fa fa-trash-o hover-link btn-delete" style="color: red" title="Delete" data-id="@item.Id.ToString()">
+                        </i>
+                        | <i class="fa fa-pencil hover-link btn-edit" style="color: #0a03ff" title="Edit" data-id="@item.Id.ToString()"></i>
+                    </div>
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>
+
+
+<script src="~/admin/assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
+<script src="~/admin/assets/js/datatable/datatable-extension/dataTables.responsive.min.js"></script>
+<script src="~/js/application/admin/datatable.js"></script>
+<script src="~/js/application/admin/user/action.js"></script>

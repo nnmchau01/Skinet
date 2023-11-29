@@ -1,0 +1,103 @@
+﻿@using Domain.Entities
+@using Domain.Constants
+@using Domain.Helpers
+@model List<Application.Models.Cart.CartProductModel>
+
+@{
+    Layout = null;
+    var yourCart = AppVersion.IsEnglishVersion ? "Your Cart" : "Giỏ hàng của bạn";
+    var total = AppVersion.IsEnglishVersion ? "Total" : "Tổng thanh toán";
+    var product = AppVersion.IsEnglishVersion ? "Product" : "Sản phẩm";
+    var quantity = AppVersion.IsEnglishVersion ? "Quantity" : "Số lượng";
+    var price = AppVersion.IsEnglishVersion ? "Price" : "Thành tiền";
+    var currency = AppVersion.IsEnglishVersion ? "$" : "đ";
+    decimal totalAll = 0;
+
+    if (Model?.Count > 0)
+    {
+        var model = Model.First();
+        totalAll = (decimal)model.TotalPriceAll;
+    }
+}
+
+<h3>@yourCart</h3>
+<div class="cart-table-warp">
+    <table>
+        <thead>
+        <tr>
+            <th class="product-th">@product</th>
+            <th class="quy-th">@quantity</th>
+            <th class="total-th">@price</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (Model?.Count > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="product-col">
+                        <a href="/Product/Detail?id=@item.ProductId.ToString()" target="_blank">
+                            <img style="width: 72px !important; height: 72px !important;" src="@item.DefaultImage" alt="">
+                        </a>
+
+                        <div class="pc-title">
+                            <h4>@item.ProductName</h4>
+                            <p>@item.Currency.ToCurrencyMoney(item.PriceEachItem)</p>
+                        </div>
+                    </td>
+                    <td class="quy-col">
+                        <div class="quantity">
+                            <div class="pro-qty">
+                                <span class="dec qtybtn">-</span>
+                                <input
+                                    type="text"
+                                    class="on-change-value-quantity onchange-handle"
+                                    product-id="@item.ProductId.ToString()"
+                                    id="@item.ProductId.ToString()"
+                                    value="@item.Quantity">
+                                <span class="inc qtybtn">+</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="total-col">
+                        <h4>@item.Currency.ToCurrencyMoney(item.TotalPriceEachRowItem)</h4>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+<div class="total-cost">
+    <h6>
+        @total <span id="total-final">@currency.ToCurrencyMoney(totalAll)</span>
+        <input type="hidden" id="totalAll" value="@totalAll"/>
+        <input type="hidden" id="currency" value="@currency"/>
+    </h6>
+</div>
+
+<script>
+    var proQty = $('.pro-qty');
+    proQty.on('click', '.qtybtn', function () {
+        var button = $(this);
+        var oldValue = button.parent().find('input').val();
+        if (button.hasClass('inc')) {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            // Don't allow decrementing below zero
+            if (oldValue > 0) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 0;
+            }
+        }
+        button.parent().find('input').val(newVal);
+        var productId =  button.parent().find('input').attr('product-id');
+        
+        setCartLocal(newVal, productId);
+
+    });
+</script>
+
+<script src="~/js/application/web/add-to-cart.js"></script>

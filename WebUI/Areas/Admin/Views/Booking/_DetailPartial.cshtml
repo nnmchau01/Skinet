@@ -1,0 +1,43 @@
+﻿@* @using Domain.Constants *@
+@* @model Application.Models.Booking.BookingDetailModel *@
+@* *@
+@* @{ *@
+@*     Layout = null; *@
+@* *@
+@*     var title = AppVersion.IsEnglishVersion ? "Update Category" : "Cập nhật dịch vụ"; *@
+@*     var required = AppVersion.IsEnglishVersion ? "This field is required." : "Trường này là bắt buộc."; *@
+@*     var save = AppVersion.IsEnglishVersion ? "Update" : "Sửa"; *@
+@*     var serviceName = AppVersion.IsEnglishVersion ? "Service Name" : "Tên dịch vụ"; *@
+@*     var price = AppVersion.IsEnglishVersion ? "Price" : "Giá dịch vụ"; *@
+@*     var existed = AppVersion.IsEnglishVersion ? "Service Name has existed" : "Tên dịch vụ đã tồn tại."; *@
+@* } *@
+@* <input type="hidden" id="existedText" value="@existed"/> *@
+@* <input type="hidden" id="ServiceName" value="@Model.ServiceName"/> *@
+@* *@
+@* <div class="modal-header"> *@
+@*     <h4 class="modal-title">@title</h4> *@
+@*     <button class="close" type="button" data-dismiss="modal" aria-label="Close"> *@
+@*         <span aria-hidden="true">×</span> *@
+@*     </button> *@
+@* </div> *@
+@* *@
+@* <div class="modal-body"> *@
+@*     <form id="frmSubmit" class="contact-form"> *@
+@*         <div class="form-group required"> *@
+@*             <input class="input form-control" type="text" value="@Model.ServiceName" name="ServiceName" placeholder="@serviceName"> *@
+@*             <span class="text-danger" style="display: none;">@required</span> *@
+@*             <span class="text-danger" id="Existed" style="display: none;"></span> *@
+@*         </div> *@
+@*         <div class="form-group required"> *@
+@*             <input class="input form-control format-money-input" value="@Model.Price" type="text" name="Price" placeholder="@price"> *@
+@*             <span class="text-danger" style="display: none;">@required</span> *@
+@*         </div> *@
+@*         <input class="input form-control" type="hidden" value="@Model.Id.ToString()" name="Id"> *@
+@*     </form> *@
+@* </div> *@
+@* *@
+@* <div class="modal-footer"> *@
+@*     <button class="btn btn-primary text-center" id="btn-submit-update">@save</button> *@
+@* </div> *@
+@* *@
+@* <script src="~/js/application/admin/service/update.js"></script> *@

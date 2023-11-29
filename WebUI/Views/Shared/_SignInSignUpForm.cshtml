@@ -1,0 +1,175 @@
+﻿@using Domain.Entities
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Domain.Constants
+@model Application.Common.Models.CurrentUserModel
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+
+@{
+    Layout = null;
+    var loginProviders = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+    var signIn = AppVersion.IsEnglishVersion ? "Sign in" : "Đăng nhập";
+    var required = AppVersion.IsEnglishVersion ? "This field is required." : "Trường này là bắt buộc.";
+    var signInFb = AppVersion.IsEnglishVersion ? "Sign In With Facebook" : "Đăng nhập bằng Facebook";
+    var signInGg = AppVersion.IsEnglishVersion ? "Sign In With Google" : "Đăng nhập bằng Google";
+    var signUp = AppVersion.IsEnglishVersion ? "Sign up" : "Đăng ký";
+    var signUpFb = AppVersion.IsEnglishVersion ? "Sign Up With Facebook" : "Đăng ký bằng Facebook";
+    var signUpGg = AppVersion.IsEnglishVersion ? "Sign Up With Google" : "Đăng ký bằng Google";
+    var username = AppVersion.IsEnglishVersion ? "Username" : "Tên tài khoản";
+    var fullname = AppVersion.IsEnglishVersion ? "Full name" : "Họ tên";
+    var email = AppVersion.IsEnglishVersion ? "Email" : "Địa chỉ email";
+    var address = AppVersion.IsEnglishVersion ? "Address" : "Địa chỉ";
+    var phoneNumber = AppVersion.IsEnglishVersion ? "Phone number" : "Số điện thoại";
+    var password = AppVersion.IsEnglishVersion ? "Password" : "Mật khẩu";
+}
+
+<div class="modal fade" id="modal-sign-in" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" id="modal-modal-sign-in-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="frmLogin" class="contact-form">
+                    <h2 class="card-title text-center">@signIn</h2>
+
+                    <div class="form-group required">
+                        <input class="input" type="text" name="Username" placeholder="@username">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+
+                    <div class="form-group required">
+                        <input class="input" type="password" name="Password" placeholder="@password">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+
+
+                </form>
+
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary" id="btn-sign-in">@signIn</button>
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+
+                <hr/>
+
+                <form
+                    asp-controller="Authenticate"
+                    asp-action="ExternalLogin"
+                    method="post" class="form-horizontal">
+                    @foreach (var provider in loginProviders)
+                    {
+                        if (string.Equals(provider.Name, "facebook", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <button type="submit"
+                                    class="btn btn-lg btn-facebook btn-block text-uppercase"
+                                    name="provider" value="@provider.Name"
+                                    title="sử dụng tài khoản @provider.DisplayName của bạn để đăng nhập hoặc đăng ký">
+                                <i class="fab fa-facebook-f mr-2"></i> @signInFb
+                            </button>
+                        }
+                        else if (string.Equals(provider.Name, "google", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <button type="submit"
+                                    class="btn btn-lg btn-google btn-block text-uppercase"
+                                    name="provider" value="@provider.Name"
+                                    title="sử dụng tài khoản @provider.DisplayName của bạn để đăng nhập hoặc đăng ký">
+                                <i class="fab fa-google mr-2"></i> @signInGg
+                            </button>
+                        }
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-sign-up" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" id="modal-modal-sign-up-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="frmSubmitSignUp" class="contact-form">
+                    <h2 class="card-title text-center">@signUp</h2>
+
+                    <div class="form-group required">
+                        <input class="input" type="text" name="Username" placeholder="@username">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+
+                    <div class="form-group required">
+                        <input class="input" type="text" name="FullName" placeholder="@fullname">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+
+                    <div class="form-group required">
+                        <input class="input" type="email" name="Email" placeholder="@email">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+
+                    <div class="form-group required">
+                        <input class="input" type="text" name="Address" placeholder="@address">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+
+                    <div class="form-group required">
+                        <input class="input" type="text" name="PhoneNumber" placeholder="@phoneNumber">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+
+                    <div class="form-group required">
+                        <input class="input" type="password" name="Password" placeholder="@password">
+                        <span class="text-danger" style="display: none;">@required</span>
+                    </div>
+
+                </form>
+
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        <button class="btn btn-primary text-center" id="btn-sign-up">@signUp</button>
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+
+                <hr/>
+                <form
+                    asp-controller="Authenticate"
+                    asp-action="ExternalLogin"
+                    method="post" class="form-horizontal">
+                    @foreach (var provider in loginProviders)
+                    {
+                        if (string.Equals(provider.Name, "facebook", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <button type="submit"
+                                    class="btn btn-lg btn-facebook btn-block text-uppercase"
+                                    name="provider" value="@provider.Name"
+                                    title="sử dụng tài khoản @provider.DisplayName của bạn để đăng nhập hoặc đăng ký">
+                                <i class="fab fa-facebook-f mr-2"></i> @signUpFb
+                            </button>
+                        }
+                        else if (string.Equals(provider.Name, "google", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <button type="submit"
+                                    class="btn btn-lg btn-google btn-block text-uppercase"
+                                    name="provider" value="@provider.Name"
+                                    title="sử dụng tài khoản @provider.DisplayName của bạn để đăng nhập hoặc đăng ký">
+                                <i class="fab fa-google mr-2"></i> @signUpGg
+                            </button>
+                        }
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

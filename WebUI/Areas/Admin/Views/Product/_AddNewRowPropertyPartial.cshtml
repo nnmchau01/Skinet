@@ -1,0 +1,21 @@
+﻿@model List<Application.Models.Property.PropertyDetailModel>
+@{
+    Layout = null;
+
+}
+@{
+    var rowCount = 1;
+    foreach (var item in Model)
+    {
+        <div class="row property-value" id="row-@rowCount">
+            <div class="col-md-6" id="col-name-@rowCount">
+                <input type="text" class="form-control" id="name-@rowCount" name="Name" style="width: 100% !important;" value="@item.Name">
+            </div>
+            <div class="col-md-6" id="col-value-@rowCount">
+                <input type="text" class="form-control" id="value-@rowCount" name="Value" style="width: 100% !important;" value="@item.Value">
+            </div>
+        </div>
+        <br/>
+        rowCount++;
+    }
+}
