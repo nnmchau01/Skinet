@@ -38,9 +38,11 @@ public class OrderController : BaseAdminController
     public async Task<IActionResult> DetailPartial(string id)
     {
         var data = await _orderService.Detail(id);
+        var order = _orderService.Detail
 
         return PartialView("_DetailPartial", data);
     }
+
 
     public async Task<IActionResult> UpdatePartial(string id)
     {

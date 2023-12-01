@@ -114,11 +114,10 @@ public class PaymentController : BaseController
         var data = await _orderService.AddNew(request);
         var order = await _orderService.DetailByCode(data);
 
-        var usersWithAdminRole = await _userManager.GetUsersInRoleAsync(SecurityRoles.Admin);
+        //var usersWithAdminRole = await _userManager.GetUsersInRoleAsync(SecurityRoles.Admin);
 
         // var emailUser = await _userManager.FindByIdAsync(_identityService.GetCurrentUserLogin().Id);
         
-
         //foreach (var user in usersWithAdminRole)
         //{
         //    await _emailService.SendNewOrderAsync(user.Email, "", order.Code, order.CustomerName,
