@@ -11,7 +11,7 @@
     var information = AppVersion.IsEnglishVersion ? "Information" : "Thông tin thêm";
     var brand = AppVersion.IsEnglishVersion ? "Brand" : "Thương hiệu";
     var category = AppVersion.IsEnglishVersion ? "Category" : "Thể loại";
-    var discount = AppVersion.IsEnglishVersion ? "Discount" : "Giảm giá";
+    var discount = AppVersion.IsEnglishVersion ? "Stock" : "Số lượng";
 }
 
 <!-- Page info -->
@@ -52,19 +52,8 @@
                 @await Html.PartialAsync("_RatingStarPartial")
                 <h2 class="p-title">@Model.Name</h2>
                 <input type="hidden" id="ProductName" value="@Model.Name"/>
-                @if (Model.Discount > 0)
-                {
-                    <h3 class="p-price" style="text-decoration: line-through">@Model.Currency.ToCurrencyMoney(Model.Price)</h3>
-                    <h3 class="p-price">@Model.Currency.ToCurrencyMoney(Model.Price.CalDiscountPrice(Model.Discount))</h3>
-                }
-                else
-                {
-                    <h3 class="p-price">@Model.Currency.ToCurrencyMoney(Model.Price)</h3>
-                }
-                @if (Model.Discount > 0)
-                {
-                    <h4 class="p-stock">@discount: <span>-@Model.Discount%</span></h4>
-                }
+                <h3 class="p-price">@Model.Currency.ToCurrencyMoney(Model.Price)</h3>
+                <h4 class="p-stock">@discount: <span>@Model.Stock</span></h4>
                 <h4 class="p-stock">@brand: <span>@Model.Brand</span></h4>
                 <h4 class="p-stock">@category: <span>@Model.Category</span></h4>
                 <div class="quantity">

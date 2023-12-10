@@ -18,4 +18,5 @@ public class UpdateProductModel
     [Required] public Guid BrandId { get; set; }
     [Required] public Guid CategoryId { get; set; }
     public List<ImageDetailModel>? ListImage { get; set; }
+    public int Stock { get; set; }
 }
