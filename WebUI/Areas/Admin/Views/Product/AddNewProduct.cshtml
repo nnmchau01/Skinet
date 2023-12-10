@@ -23,6 +23,7 @@
     var saveChange = AppVersion.IsEnglishVersion ? "Save Changes" : "Lưu thay đổi";
     var price = AppVersion.IsEnglishVersion ? "Price" : "Giá sản phẩm";
     var validPrice = AppVersion.IsEnglishVersion ? "Price is invalid" : "Giá tiền không đúng định dạng";
+    var discount = AppVersion.IsEnglishVersion ? "Stock" : "Số lượng";
 }
 <input type="hidden" id="NewProductId" value="@newProductId"/>
 <input type="hidden" id="Required" value="@required"/>
@@ -92,6 +93,16 @@
                                     <input class="form-control" id="Price" type="text" data-original-title="" title="">
                                     <span class="text-danger required" id="sPrice" style="display: none;">@required</span>
                                     <span class="text-danger required" id="sPrice2" style="display: none;">@validPrice</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="Stock">
+                                        @discount <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" id="Stock" type="text" >
                                 </div>
                             </div>
                         </div>

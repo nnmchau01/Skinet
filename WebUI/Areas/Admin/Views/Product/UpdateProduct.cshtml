@@ -23,7 +23,7 @@
     var saveChange = AppVersion.IsEnglishVersion ? "Save Changes" : "Lưu thay đổi";
     var price = AppVersion.IsEnglishVersion ? "Price" : "Giá sản phẩm";
     var validPrice = AppVersion.IsEnglishVersion ? "Price is invalid" : "Giá tiền không đúng định dạng";
-    var discount = AppVersion.IsEnglishVersion ? "Discount percent" : "Giảm giá (đơn vị %)";
+    var discount = AppVersion.IsEnglishVersion ? "Stock" : "Số lượng";
     var propertyCount = Model.Product.Properties?.Count > 0 ? Model.Product.Properties.Count : 0;
     var priceAfterDiscount = AppVersion.IsEnglishVersion ? "Price after discount " : "Giá sau khi giảm ";
 }
@@ -117,13 +117,9 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="Discount">
-                                        @discount
+                                        @discount <span class="text-danger">*</span>
                                     </label>
-                                    <input class="form-control" id="Discount" type="text" value="@Model.Product.Discount.ToString().Split(".")[0]">
-                                    <span class="text-danger required" id="sDiscount2" style="display: none;">@validPrice</span>
-                                    <span class="text-info required" id="sPriceAfterDiscount" style="display: none;">
-                                        @priceAfterDiscount <span id="PriceAfterDiscountValue"></span>
-                                    </span>
+                                    <input class="form-control" id="Stock" type="text" value="@Model.Product.Discount.ToString().Split(".")[0]">
                                 </div>
                             </div>
                         </div>

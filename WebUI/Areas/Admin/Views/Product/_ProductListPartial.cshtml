@@ -9,7 +9,7 @@
     var brand = AppVersion.IsEnglishVersion ? "Brand" : "Thương hiệu";
     var category = AppVersion.IsEnglishVersion ? "Category" : "Thể loại";
     var price = AppVersion.IsEnglishVersion ? "Price" : "Giá sản phẩm";
-    var discount = AppVersion.IsEnglishVersion ? "Discount price" : "Giá khuyến mãi";
+    var discount = AppVersion.IsEnglishVersion ? "Stock" : "Số lượng";
     var createdAt = AppVersion.IsEnglishVersion ? "Created at" : "Tạo ngày";
     var updatedAt = AppVersion.IsEnglishVersion ? "Updated at" : "Sửa ngày";
     var action = AppVersion.IsEnglishVersion ? "Action" : "Thao tác";
@@ -48,14 +48,7 @@
                 <td>@item.Brand</td>
                 <td>@item.Category</td>
                 <td>@item.Currency.ToCurrencyMoney(item.Price)</td>
-                @if (item.Discount > 0)
-                {
-                    <td>@item.Currency.ToCurrencyMoney(item.Price.CalDiscountPrice(item.Discount)) (-@item.Discount%)</td>
-                }
-                else
-                {
-                    <td>@item.Discount</td>
-                }
+                <td>@item.Stock</td>
                 <td>@item.CreatedAt.ToDatetimeString()</td>
                 <td>@item.UpdatedAt.ToDatetimeStringNullable()</td>
                 <td>

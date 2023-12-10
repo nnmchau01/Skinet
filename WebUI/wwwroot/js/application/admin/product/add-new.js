@@ -143,7 +143,8 @@
                 formData.append('Description', $('#Description').val())
                 formData.append('Price', price.toString())
                 formData.append('Currency', $('input[name=Currency]:checked').val())
-
+                formData.append('Stock', $('#Stock').val());
+                
                 for(var i = 0; i < $('#Images')[0].files.length; i++){
                     formData.append('Images', $('#Images')[0].files[i])
                 }
@@ -155,7 +156,7 @@
                 }
                 coreAjaxWithFormData(isValid, '/Admin/Product/SubmitCreate', formData, 'POST', function (res) {
                     toastMessage('success', 'Saved successfully');
-                    window.location.href = '/Admin/Home/Index'
+                    window.location.href = '/Admin/Product/Index'
                 }, function () {});
             }
         })

@@ -270,6 +270,22 @@ public class OrderService : IOrderService
         await _dbContext.OrderItems.AddRangeAsync(orderItems);
         await _dbContext.SaveChangesAsync(new CancellationToken());
 
+        foreach (var product in orderItems)
+        {
+            var p = await _dbContext.Products.FirstOrDefaultAsync(s => s.Id == product.ProductId && !s.IsDeleted);
+
+            if (p != null)
+            {
+                var totalProduct = product.Quantity;
+                
+                p.Stock = p.Stock - product.Quantity;
+                
+                _dbContext.Products.Update(p);
+                await _dbContext.SaveChangesAsync(new CancellationToken());
+            }
+            
+        }
+        
         return order.Code;
     }
 

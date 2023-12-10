@@ -75,36 +75,36 @@
                             <div class="col-lg-4 col-sm-6">
                                 <div class="product-item">
                                     <div class="pi-pic">
-                                        @if (item.Discount > 0)
-                                        {
-                                            <div class="tag-sale">-@item.Discount%</div>
-                                        }
+                                        <div class="tag-sale">SL: @item.Stock%</div>
                                         <a href="/p/@item.Url">
                                             <img style="width: 263px !important;height: 408px !important;" src="@item.DefaultImage" alt="">
                                         </a>
                                         <div class="pi-links">
-                                            <a
-                                                href="#"
-                                                class="add-card add-to-cart"
-                                                product-id="@item.Id.ToString()">
-                                                <i class="flaticon-bag"></i>
-                                                <span>@addToCart</span>
-                                            </a>
-                                            <a href="#" class="wishlist-btn">
-                                                <i class="flaticon-heart"></i>
-                                            </a>
+                                            @if (item.Stock <= 0)
+                                            {
+                                                <a
+                                                    href="#"
+                                                    class="add-card"
+                                                    product-id="">
+                                                    <i class="flaticon-bag"></i><span>Đã bán hết</span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a
+                                                    href="#"
+                                                    class="add-card add-to-cart"
+                                                    product-id="@item.Id.ToString()">
+                                                    <i class="flaticon-bag"></i><span>@addToCart</span>
+                                                </a>
+                                                <a href="#" class="wishlist-btn">
+                                                    <i class="flaticon-heart"></i>
+                                                </a>
+                                            }
                                         </div>
                                     </div>
                                     <div class="pi-text">
-                                        @if (item.Discount > 0)
-                                        {
-                                            <h6 style="text-decoration: line-through">@item.Currency.ToCurrencyMoney(item.Price)</h6>
-                                            <h6>@item.Currency.ToCurrencyMoney(item.Price.CalDiscountPrice(item.Discount))</h6>
-                                        }
-                                        else
-                                        {
-                                            <h6>@item.Currency.ToCurrencyMoney(item.Price)</h6>
-                                        }
+                                        <h6>@item.Currency.ToCurrencyMoney(item.Price)</h6>
                                         <p>@item.Name</p>
                                     </div>
                                 </div>

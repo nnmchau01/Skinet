@@ -68,7 +68,6 @@ public class ProductService : IProductService
                 .First(s => !s.IsDeleted
                             && s.Type.Equals(StatusType.Product.ReadDescription())
                             && s.Code.Equals(ProductStatus.AvailableCode.ReadDescription())).Id;
-            product.Stock = 0;
             product.Url = model.Name.VietnameseToNormalString();
             product.OriginLinkDetail = model.Name.ToStringCode();
             product.DefaultImage = model.ListImage.First().LocalLinkImage;
@@ -258,7 +257,8 @@ public class ProductService : IProductService
             productDetail.Currency = model.Currency;
             productDetail.BrandId = model.BrandId;
             productDetail.CategoryId = model.CategoryId;
-
+            productDetail.Stock = model.Stock;
+            
             _dbContext.Products.Update(productDetail);
             await _dbContext.SaveChangesAsync(new CancellationToken());
 
