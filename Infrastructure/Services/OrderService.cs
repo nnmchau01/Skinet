@@ -260,16 +260,7 @@ public class OrderService : IOrderService
                 PromotionId = promotionId ?? Guid.NewGuid()
             })
             .ToList();
-
-        await _dbContext.Orders.AddAsync(order);
-        await _dbContext.SaveChangesAsync(new CancellationToken());
-
-        await _dbContext.Payments.AddAsync(payment);
-        await _dbContext.SaveChangesAsync(new CancellationToken());
-
-        await _dbContext.OrderItems.AddRangeAsync(orderItems);
-        await _dbContext.SaveChangesAsync(new CancellationToken());
-
+        
         foreach (var product in orderItems)
         {
             var p = await _dbContext.Products.FirstOrDefaultAsync(s => s.Id == product.ProductId && !s.IsDeleted);
@@ -279,12 +270,26 @@ public class OrderService : IOrderService
                 var totalProduct = product.Quantity;
                 
                 p.Stock = p.Stock - product.Quantity;
+
+                if (p.Stock < 0)
+                {
+                    p.Stock = 0;
+                }
                 
                 _dbContext.Products.Update(p);
                 await _dbContext.SaveChangesAsync(new CancellationToken());
             }
             
         }
+        
+        await _dbContext.Orders.AddAsync(order);
+        await _dbContext.SaveChangesAsync(new CancellationToken());
+
+        await _dbContext.Payments.AddAsync(payment);
+        await _dbContext.SaveChangesAsync(new CancellationToken());
+
+        await _dbContext.OrderItems.AddRangeAsync(orderItems);
+        await _dbContext.SaveChangesAsync(new CancellationToken());
         
         return order.Code;
     }
